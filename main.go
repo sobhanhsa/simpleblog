@@ -8,7 +8,6 @@ import (
 	"github.com/sobhanhsa/simpleblog/db"
 	"github.com/sobhanhsa/simpleblog/initializers"
 	"github.com/sobhanhsa/simpleblog/middlewares"
-	"github.com/sobhanhsa/simpleblog/models"
 	// "github.com/sobhanhsa/simpleblog/models"
 )
 
@@ -24,22 +23,6 @@ func main() {
 
 	r.Use(middlewares.UserAuth)
 
-	r.GET("/ss", func(c *gin.Context) {
-		var arts models.Article
-
-		// for i := 0; i > len(arts); i++ {
-		// 	var deletedTime time.Time = arts[i].DeletedAt.Time
-		// 	var now time.Time = time.Now()
-
-		// 	deletedTime.Add(24 * time.Hour)
-
-		// 	if !now.Before(deletedTime) {
-		// 		db.DB.Unscoped().Delete(&arts[i])
-		// 	}
-		// }
-
-		c.JSON(200, gin.H{"data": arts})
-	})
 	r.GET("/", controllers.MainPage)
 	r.GET("/validate", controllers.UserValidate)
 	r.POST("/signup", controllers.SignUpPage)
