@@ -4,6 +4,7 @@ import (
 	// "net/http"
 
 	"fmt"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"github.com/sobhanhsa/simpleblog/db"
@@ -13,10 +14,23 @@ import (
 
 func MainPage(c *gin.Context) {
 	// var articles models.Article
-	var articles models.Article
-	// db.DB.Find(&articles).Order("CreatedAt DESC")
+	var articles []models.Article
 
-	db.DB.Order("created_at DESC").Find(&articles)
+	var dateOrder string = c.Query("dateorder")
+
+	limit, err := strconv.Atoi(c.Query("limit"))
+
+	if err != nil {
+		limit = 4
+	}
+
+	var orderQeury string
+
+	if orderQeury = "created_at DESC"; dateOrder == "oldest" {
+		orderQeury = "created_at ASC"
+	}
+
+	db.DB.Order(orderQeury).Limit(limit).Find(&articles)
 
 	c.JSON(200, gin.H{"message": articles})
 }
