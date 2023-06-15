@@ -51,6 +51,7 @@ func UserAuth(c *gin.Context) {
 			c.Set("userAuthStatus", false)
 			return
 		}
+
 		//set user password to empty string
 		User.Password = "0000"
 
