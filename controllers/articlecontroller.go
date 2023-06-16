@@ -46,7 +46,8 @@ func SearchArticle(c *gin.Context) {
 
 	db.DB.Where("title = ?", searchValue).First(&findedArticle)
 
-	db.DB.Model(&models.Article{}).Where("hash_tag LIKE ?", "%"+searchValue+"%").Find(&articles)
+	db.DB.Model(&models.Article{}).Where("hash_tag LIKE ?", "%"+searchValue+"%").
+		Order("created_at DESC").Find(&articles)
 
 	c.JSON(200, gin.H{"finded article": findedArticle, "related articles": articles})
 
@@ -104,6 +105,12 @@ func ShowProfile(c *gin.Context) {
 
 	var articles []models.Article
 
+	limit, err := strconv.Atoi(c.Query("limit"))
+
+	if err != nil {
+		limit = 4
+	}
+
 	db.DB.Where("username=?", username).Find(&User)
 
 	if User.ID == 0 {
@@ -111,7 +118,7 @@ func ShowProfile(c *gin.Context) {
 		return
 	}
 
-	db.DB.Where("auther=?", username).Order("created_at DESC").Find(&articles).Limit(5)
+	db.DB.Where("auther=?", username).Order("created_at DESC").Limit(limit).Find(&articles)
 
 	c.JSON(200, gin.H{"username": username, "email": User.Email, "name": User.Name, "articles": articles})
 
