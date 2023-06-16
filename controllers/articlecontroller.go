@@ -13,11 +13,12 @@ import (
 )
 
 func MainPage(c *gin.Context) {
-	// var articles models.Article
+
 	var articles []models.Article
 
 	var dateOrder string = c.Query("dateorder")
 
+	//convert strin to int
 	limit, err := strconv.Atoi(c.Query("limit"))
 
 	if err != nil {
