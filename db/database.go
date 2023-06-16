@@ -30,12 +30,12 @@ func CreateArticle(auther string, title string, body string, hashtag string) (*g
 	return result, article
 }
 
-func CreateUser(email string, username string, name string, password string) *gorm.DB {
+func CreateUser(email string, username string, name string, password string) models.User {
 	user := models.User{Email: email, Username: username, Name: name, Password: password}
 
-	result := DB.Create(&user)
+	DB.Create(&user)
 
-	return result
+	return user
 }
 
 func ModelMigrate(model interface{}) {

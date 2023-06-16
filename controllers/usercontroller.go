@@ -95,12 +95,12 @@ func SignUpPage(c *gin.Context) {
 	var User models.User
 
 	db.DB.Where("email=?", userinfo.Email).Find(&User)
-	if User.id == 0 {
+	if User.ID != 0 {
 		c.JSON(400, gin.H{"message": "taken email"})
 		return
 	}
 	db.DB.Where("username=?", userinfo.Username).Find(&User)
-	if User.id == 0 {
+	if User.ID != 0 {
 		c.JSON(400, gin.H{"message": "taken username"})
 		return
 	}
@@ -112,18 +112,15 @@ func SignUpPage(c *gin.Context) {
 		return
 	}
 
-	// c.JSON(200, gin.H{"hashed password": hashedpassword})
-	// return
+	var createdUser = db.CreateUser(userinfo.Email, userinfo.Username, userinfo.Name, string(hashedpassword))
 
-	var result = db.CreateUser(userinfo.Email, userinfo.Username, userinfo.Name, string(hashedpassword))
-
-	if result.Error != nil {
-		c.JSON(500, gin.H{"messgae": "something unusual happened; please try later", "data": result})
+	if createdUser.ID == 0 {
+		c.JSON(500, gin.H{"messgae": "something unusual happened; please inform server staff"})
 		return
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"sub": ,
+		"sub": createdUser.ID,
 		"exp": time.Now().Add(time.Hour * 24 * 30).Unix(),
 	})
 	tokenString, err := token.SignedString([]byte(os.Getenv("SECRET")))
