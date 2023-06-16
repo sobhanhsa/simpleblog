@@ -88,17 +88,16 @@ func ShowArticles(c *gin.Context) {
 func ShowArticle(c *gin.Context) {
 	var article models.Article
 
-	title := c.Param("title")
+	id, err := strconv.Atoi(c.Param("id"))
 
-	if title == "" {
-		c.JSON(400, gin.H{"message": "please input the desired title name"})
-		return
+	if err != nil {
+		c.JSON(400, gin.H{"message": "invalid id", "id": id})
 	}
 
-	db.DB.Where("title=?", title).Find(&article)
+	db.DB.First(&article, id)
 
 	if article.ID == 0 {
-		c.JSON(400, gin.H{"message": "no article founded with " + title + " title"})
+		c.JSON(400, gin.H{"message": "no article founded with given id", "id": id})
 		return
 	}
 
@@ -123,7 +122,7 @@ func UpdateArticle(c *gin.Context) {
 		return
 	}
 
-	title := c.Param("title")
+	id := c.Param("id")
 
 	var article models.Article
 
@@ -135,15 +134,15 @@ func UpdateArticle(c *gin.Context) {
 
 	c.Bind(&body)
 
-	if result := db.DB.Where("title=? and auther=?", title, User.Username).Find(&article); article.ID == 0 {
-		c.JSON(400, gin.H{"message": "you dont have any article with this title", "erorr": result.Error})
+	if result := db.DB.Where("id=? and auther=?", id, User.Username).Find(&article); article.ID == 0 {
+		c.JSON(400, gin.H{"message": "you dont have any article with this id", "erorr": result.Error})
 		return
 	}
 
 	if result := db.DB.Model(&article).Updates(models.Article{Auther: "",
 		Title: body.Title, Body: body.Body, HashTag: body.Hashtag}); result.Error != nil {
 		fmt.Println(result.Error)
-		c.JSON(400, gin.H{"message": "update process faild", "erorr": result.Error, "title": title})
+		c.JSON(400, gin.H{"message": "update process faild", "erorr": result.Error, "id": id})
 		return
 	}
 
@@ -167,12 +166,12 @@ func DeleteArticle(c *gin.Context) {
 		return
 	}
 
-	title := c.Param("title")
+	id := c.Param("id")
 
 	var article models.Article
 
-	if result := db.DB.Where("title=? and auther=?", title, User.Username).Find(&article); article.ID == 0 {
-		c.JSON(400, gin.H{"message": "you dont have any article with this title", "erorr": result.Error})
+	if result := db.DB.Where("id=? and auther=?", id, User.Username).Find(&article); article.ID == 0 {
+		c.JSON(400, gin.H{"message": "you dont have any article with this id", "erorr": result.Error})
 		return
 	}
 
