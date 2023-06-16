@@ -36,6 +36,22 @@ func MainPage(c *gin.Context) {
 	c.JSON(200, gin.H{"message": articles})
 }
 
+func SearchArticle(c *gin.Context) {
+
+	var searchValue string = c.Query("search_query")
+
+	var articles []models.Article
+
+	var findedArticle models.Article
+
+	db.DB.Where("title = ?", searchValue).First(&findedArticle)
+
+	db.DB.Model(&models.Article{}).Where("hash_tag LIKE ?", "%"+searchValue+"%").Find(&articles)
+
+	c.JSON(200, gin.H{"finded article": findedArticle, "related articles": articles})
+
+}
+
 func PublishArticle(c *gin.Context) {
 	// get authentication status
 	userauthstatus, _ := c.Get("userAuthStatus")

@@ -26,6 +26,7 @@ func main() {
 	r.Use(middlewares.UserAuth)
 
 	r.GET("/", controllers.MainPage)
+	r.GET("/result", controllers.SearchArticle)
 	r.GET("/validate", controllers.UserValidate)
 	r.POST("/signup", controllers.SignUpPage)
 	r.POST("/login", controllers.LoginPage)
