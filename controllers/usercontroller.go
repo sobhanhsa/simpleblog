@@ -83,19 +83,24 @@ func SignUpPage(c *gin.Context) {
 	}
 
 	if !(validators.IsEmailValid(userinfo.Email)) {
-		c.JSON(400, gin.H{"message": "invalid email please emendate it"})
+		c.JSON(400, gin.H{"message": "invalid email", "success": false})
+		return
+	}
+
+	if !(validators.UsernameValidator(userinfo.Username)) {
+		c.JSON(400, gin.H{"message": "invalid username", "success": false})
 		return
 	}
 
 	var User models.User
 
 	db.DB.Where("email=?", userinfo.Email).Find(&User)
-	if User.Email != "" {
+	if User.id == 0 {
 		c.JSON(400, gin.H{"message": "taken email"})
 		return
 	}
 	db.DB.Where("username=?", userinfo.Username).Find(&User)
-	if User.Username != "" {
+	if User.id == 0 {
 		c.JSON(400, gin.H{"message": "taken username"})
 		return
 	}
@@ -118,7 +123,7 @@ func SignUpPage(c *gin.Context) {
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"sub": User.ID,
+		"sub": ,
 		"exp": time.Now().Add(time.Hour * 24 * 30).Unix(),
 	})
 	tokenString, err := token.SignedString([]byte(os.Getenv("SECRET")))
@@ -131,7 +136,9 @@ func SignUpPage(c *gin.Context) {
 
 	c.SetSameSite(http.SameSiteLaxMode)
 	c.SetCookie("Authorization", tokenString, 3600*24*30, "", "", false, true)
-	c.String(200, tokenString)
+
+	// c.SetSameSite(http.SameSiteLaxMode)
+	// c.SetCookie("Authorization", tokenString, 3600*24*30, "", "", false, true)
 
 	c.JSON(200, gin.H{"message": "congratulation your account succesfully created"})
 }
