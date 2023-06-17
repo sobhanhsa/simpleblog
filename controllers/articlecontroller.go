@@ -73,16 +73,24 @@ func PublishArticle(c *gin.Context) {
 	}
 
 	var reqBody struct {
-		Title   string
-		Body    string
-		Hashtag string
+		Title    string
+		Category string
+		Body     string
+		Hashtag  string
 	}
 
 	//get data from req body and store that in reqBody
 	c.Bind(&reqBody)
 
-	if (reqBody.Body == "") || (reqBody.Title == "") {
-		c.JSON(400, gin.H{"message": "please input required fields such title and body"})
+	if (reqBody.Body == "") || (reqBody.Title == "") || (reqBody.Category == "") {
+		c.JSON(400, gin.H{"message": "please input required fields such title , body and category"})
+		return
+	}
+
+	//check the article category
+	if !(utils.CheckCat(reqBody.Category)) {
+		c.JSON(400, gin.H{"message": "your desired caterogy is not available",
+			"available categories": utils.Categoryies})
 		return
 	}
 
