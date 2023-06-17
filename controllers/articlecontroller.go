@@ -36,6 +36,23 @@ func MainPage(c *gin.Context) {
 	c.JSON(200, gin.H{"message": articles})
 }
 
+func ArticleCategory(c *gin.Context) {
+
+	var category string = c.Param("category")
+
+	var articles []models.Article
+
+	if !utils.CheckCat(category) {
+		c.JSON(400, gin.H{"message": "undefined category"})
+		return
+	}
+
+	db.DB.Where("category = ?", category).Find(&articles)
+
+	c.JSON(200, gin.H{"articles": articles})
+
+}
+
 func SearchArticle(c *gin.Context) {
 
 	var searchValue string = c.Query("search_query")

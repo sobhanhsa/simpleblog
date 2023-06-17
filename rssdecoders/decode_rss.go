@@ -9,6 +9,7 @@ import (
 )
 
 func Decoder(address string, category string) {
+	// fmt.Println("in the decoder")
 	resp, err := http.Get(address)
 	if err != nil {
 		fmt.Printf("Error GET: %v\n", err)
@@ -27,6 +28,7 @@ func Decoder(address string, category string) {
 	var data Item
 	for _, item := range rss.Channel.Items {
 		data = item
+		// fmt.Println(data.Desc)
 		db.CreateArticle("sobhanhsa1", category, data.Title, data.Desc, "")
 	}
 }
