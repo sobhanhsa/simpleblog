@@ -8,7 +8,7 @@ import (
 	"github.com/sobhanhsa/simpleblog/db"
 	"github.com/sobhanhsa/simpleblog/initializers"
 	"github.com/sobhanhsa/simpleblog/middlewares"
-	"github.com/sobhanhsa/simpleblog/rssdecoders"
+	// "github.com/sobhanhsa/simpleblog/rssdecoders"
 	// "github.com/sobhanhsa/simpleblog/models"
 )
 
@@ -37,7 +37,7 @@ func main() {
 	r.GET("/article/:id", controllers.ShowArticle)
 	r.PUT("/article/:id", controllers.UpdateArticle)
 	r.DELETE("/article/:id", controllers.DeleteArticle)
-	rssdecoders.Decoder("https://www.realwire.com/rss/?id=488", "lifestyle")
+
 	r.Run()
 
 }
