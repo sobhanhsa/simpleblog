@@ -95,7 +95,8 @@ func PublishArticle(c *gin.Context) {
 	}
 
 	//publish article
-	result, insertedArticle := db.CreateArticle(User.Username, reqBody.Title, reqBody.Body, reqBody.Hashtag)
+	result, insertedArticle := db.CreateArticle(User.Username,
+		reqBody.Category, reqBody.Title, reqBody.Body, reqBody.Hashtag)
 
 	if result.Error != nil {
 		c.JSON(400, gin.H{"message": "an error occurred", "error": result.Error})

@@ -22,8 +22,8 @@ func ConnectDB() {
 
 }
 
-func CreateArticle(auther string, title string, body string, hashtag string) (*gorm.DB, models.Article) {
-	article := models.Article{Auther: auther, Title: title, Body: body, HashTag: hashtag}
+func CreateArticle(auther string, category string, title string, body string, hashtag string) (*gorm.DB, models.Article) {
+	article := models.Article{Auther: auther, Category: category, Title: title, Body: body, HashTag: hashtag}
 
 	result := DB.Create(&article)
 
