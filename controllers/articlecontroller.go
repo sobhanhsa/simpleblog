@@ -198,19 +198,27 @@ func UpdateArticle(c *gin.Context) {
 	var article models.Article
 
 	var body struct {
-		Title   string
-		Body    string
-		Hashtag string
+		Title    string
+		Category string
+		Body     string
+		Hashtag  string
 	}
 
 	c.Bind(&body)
+
+	//check the article category
+	if !(utils.CheckCat(body.Category)) {
+		c.JSON(400, gin.H{"message": "your desired caterogy is not available",
+			"available categories": utils.Categoryies})
+		return
+	}
 
 	if result := db.DB.Where("id=? and auther=?", id, User.Username).Find(&article); article.ID == 0 {
 		c.JSON(400, gin.H{"message": "you dont have any article with this id", "erorr": result.Error})
 		return
 	}
 
-	if result := db.DB.Model(&article).Updates(models.Article{Auther: "",
+	if result := db.DB.Model(&article).Updates(models.Article{Auther: "", Category: body.Category,
 		Title: body.Title, Body: body.Body, HashTag: body.Hashtag}); result.Error != nil {
 		fmt.Println(result.Error)
 		c.JSON(400, gin.H{"message": "update process faild", "erorr": result.Error, "id": id})
