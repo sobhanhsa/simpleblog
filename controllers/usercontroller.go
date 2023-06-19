@@ -42,8 +42,9 @@ func LoginPage(c *gin.Context) {
 	} else {
 		db.DB.Where("email=?", userinfo.Email).First(&User)
 	}
-	if userinfo.Username == "" {
-		c.JSON(400, gin.H{"message": "no account was founded with given username/email"})
+
+	if User.ID == 0 {
+		c.JSON(400, gin.H{"message": "thers is no account with given username/email"})
 		return
 	}
 	var hashPassErr error = bcrypt.CompareHashAndPassword([]byte(User.Password), []byte(userinfo.Password))
@@ -51,20 +52,24 @@ func LoginPage(c *gin.Context) {
 		c.JSON(401, gin.H{"message": "incorrect password"})
 		return
 	}
+
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"sub": User.ID,
 		"exp": time.Now().Add(time.Hour * 24 * 30).Unix(),
 	})
+
 	tokenString, err := token.SignedString([]byte(os.Getenv("SECRET")))
-	// log.Fatal(err)
+
 	if err != nil {
 		c.JSON(500, gin.H{"message": "some thing wrong happened", "error": err,
 			"token": tokenString})
 		return
 	}
+
 	c.SetSameSite(http.SameSiteLaxMode)
 	c.SetCookie("Authorization", tokenString, 3600*24*30, "", "", false, true)
-	c.String(200, tokenString)
+
+	c.JSON(200, gin.H{"message": "Wellcome back " + User.Name})
 }
 func SignUpPage(c *gin.Context) {
 
