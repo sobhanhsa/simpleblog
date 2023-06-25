@@ -33,7 +33,7 @@ func LoginPage(c *gin.Context) {
 	c.Bind(&userinfo)
 
 	if (userinfo.Email == "" && userinfo.Username == "") || userinfo.Password == "" {
-		c.JSON(400, gin.H{"message": "please input required fields (email or username and password)"})
+		c.JSON(400, gin.H{"message": "please input required fields (email or username and password)", "rescode": -1})
 		return
 	}
 	if userinfo.Email == "" {
@@ -44,12 +44,12 @@ func LoginPage(c *gin.Context) {
 	}
 
 	if User.ID == 0 {
-		c.JSON(400, gin.H{"message": "thers is no account with given username/email"})
+		c.JSON(400, gin.H{"message": "thers is no account with given username/email", "rescode": 0})
 		return
 	}
 	var hashPassErr error = bcrypt.CompareHashAndPassword([]byte(User.Password), []byte(userinfo.Password))
 	if hashPassErr != nil {
-		c.JSON(401, gin.H{"message": "incorrect password"})
+		c.JSON(401, gin.H{"message": "incorrect password", "rescode": 1})
 		return
 	}
 
@@ -61,7 +61,7 @@ func LoginPage(c *gin.Context) {
 	tokenString, err := token.SignedString([]byte(os.Getenv("SECRET")))
 
 	if err != nil {
-		c.JSON(500, gin.H{"message": "some thing wrong happened", "error": err,
+		c.JSON(500, gin.H{"message": "some thing wrong happened", "rescode": 2, "error": err,
 			"token": tokenString})
 		return
 	}
@@ -69,7 +69,9 @@ func LoginPage(c *gin.Context) {
 	c.SetSameSite(http.SameSiteLaxMode)
 	c.SetCookie("Authorization", tokenString, 3600*24*30, "", "", false, true)
 
-	c.JSON(200, gin.H{"message": "Wellcome back " + User.Name})
+	User.Password = "0000"
+
+	c.JSON(200, gin.H{"message": "Wellcome back " + User.Name, "user": User})
 }
 func SignUpPage(c *gin.Context) {
 
@@ -88,12 +90,12 @@ func SignUpPage(c *gin.Context) {
 	}
 
 	if !(validators.IsEmailValid(userinfo.Email)) {
-		c.JSON(400, gin.H{"message": "invalid email", "success": false})
+		c.JSON(401, gin.H{"message": "invalid email", "success": false})
 		return
 	}
 
 	if !(validators.UsernameValidator(userinfo.Username)) {
-		c.JSON(400, gin.H{"message": "invalid username", "success": false})
+		c.JSON(401, gin.H{"message": "invalid username", "success": false})
 		return
 	}
 
@@ -113,7 +115,7 @@ func SignUpPage(c *gin.Context) {
 	hashedpassword, err := bcrypt.GenerateFromPassword([]byte(userinfo.Password), 10)
 
 	if err != nil {
-		c.JSON(400, gin.H{"messgae": "something unusual happened; please try later"})
+		c.JSON(500, gin.H{"messgae": "something unusual happened; please try later"})
 		return
 	}
 
@@ -142,7 +144,7 @@ func SignUpPage(c *gin.Context) {
 	// c.SetSameSite(http.SameSiteLaxMode)
 	// c.SetCookie("Authorization", tokenString, 3600*24*30, "", "", false, true)
 
-	c.JSON(200, gin.H{"message": "congratulation your account succesfully created"})
+	c.JSON(201, gin.H{"message": "congratulation your account succesfully created"})
 }
 func UserValidate(c *gin.Context) {
 	var resMessage string = "authrurization was succesfull"
