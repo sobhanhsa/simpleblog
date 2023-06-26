@@ -14,6 +14,8 @@ import (
 
 func MainPage(c *gin.Context) {
 
+	user, _ := c.Get("userAuthstatus")
+
 	var articles []models.Article
 
 	var dateOrder string = c.Query("dateorder")
@@ -33,7 +35,7 @@ func MainPage(c *gin.Context) {
 
 	db.DB.Order(orderQeury).Limit(limit).Find(&articles)
 
-	c.JSON(200, gin.H{"message": articles})
+	c.JSON(200, gin.H{"message": articles, "user": user})
 }
 
 func ArticleCategory(c *gin.Context) {
@@ -49,7 +51,7 @@ func ArticleCategory(c *gin.Context) {
 
 	db.DB.Where("category = ?", category).Find(&articles)
 
-	c.JSON(200, gin.H{"articles": articles})
+	c.JSON(200, gin.H{"message": articles})
 
 }
 
@@ -63,7 +65,7 @@ func SearchArticle(c *gin.Context) {
 
 	db.DB.Where("title = ?", searchValue).First(&findedArticle)
 
-	db.DB.Model(&models.Article{}).Where("hash_tag LIKE ?", "%"+searchValue+"%").
+	db.DB.Model(&models.Article{}).Where("LOWER(title) LIKE LOWER(?)", "%"+searchValue+"%").
 		Order("created_at DESC").Find(&articles)
 
 	c.JSON(200, gin.H{"finded article": findedArticle, "related articles": articles})
@@ -146,7 +148,9 @@ func ShowProfile(c *gin.Context) {
 
 	db.DB.Where("auther=?", username).Order("created_at DESC").Limit(limit).Find(&articles)
 
-	c.JSON(200, gin.H{"username": username, "email": User.Email, "name": User.Name, "articles": articles})
+	User.Password = "0000"
+
+	c.JSON(200, gin.H{"message": gin.H{"artilces": articles, "user": User}})
 
 }
 
