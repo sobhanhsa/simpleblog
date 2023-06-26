@@ -150,7 +150,7 @@ func ShowProfile(c *gin.Context) {
 
 	User.Password = "0000"
 
-	c.JSON(200, gin.H{"message": gin.H{"artilces": articles, "user": User}})
+	c.JSON(200, gin.H{"message": gin.H{"articles": articles, "user": User}})
 
 }
 
