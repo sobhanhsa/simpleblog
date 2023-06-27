@@ -260,5 +260,5 @@ func DeleteArticle(c *gin.Context) {
 
 	db.DB.Unscoped().Delete(&article)
 
-	c.JSON(200, gin.H{"message": "article succesfully deleted"})
+	c.JSON(201, gin.H{"message": "article succesfully deleted"})
 }
