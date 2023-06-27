@@ -176,7 +176,7 @@ func ShowArticle(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, gin.H{"articles": article})
+	c.JSON(200, gin.H{"article": article})
 }
 
 func UpdateArticle(c *gin.Context) {
