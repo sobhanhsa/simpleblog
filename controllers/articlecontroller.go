@@ -49,7 +49,7 @@ func ArticleCategory(c *gin.Context) {
 		return
 	}
 
-	db.DB.Where("category = ?", category).Find(&articles)
+	db.DB.Where("category = ?", category).Order("created_at DESC").Find(&articles)
 
 	c.JSON(200, gin.H{"message": articles})
 
