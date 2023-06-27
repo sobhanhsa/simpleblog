@@ -122,7 +122,7 @@ func PublishArticle(c *gin.Context) {
 		return
 	}
 	//return response
-	c.JSON(200, gin.H{"message": "your acticle succesfully published", "article": insertedArticle})
+	c.JSON(201, gin.H{"message": "your acticle succesfully published", "article": insertedArticle})
 }
 
 func ShowProfile(c *gin.Context) {
