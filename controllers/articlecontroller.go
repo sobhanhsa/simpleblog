@@ -172,7 +172,7 @@ func ShowArticle(c *gin.Context) {
 	db.DB.First(&article, id)
 
 	if article.ID == 0 {
-		c.JSON(400, gin.H{"message": "no article founded with given id", "id": id})
+		c.JSON(416, gin.H{"message": "no article founded with given id", "id": id})
 		return
 	}
 
