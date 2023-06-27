@@ -229,7 +229,7 @@ func UpdateArticle(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, gin.H{"article": article})
+	c.JSON(201, gin.H{"message": gin.H{"msg": "your article succesfully created", "artilce": article}})
 }
 func DeleteArticle(c *gin.Context) {
 	// get authentication status
