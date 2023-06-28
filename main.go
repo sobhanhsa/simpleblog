@@ -24,11 +24,15 @@ func init() {
 func main() {
 
 	//backend router
+	r := gin.Default()
+
+	r.Use(middlewares.UserAuth)
+
 	apiEngine := gin.New()
 
 	apiG := apiEngine.Group("/api")
 
-	// apiG.Use(middlewares.UserAuth)
+	apiG.Use(middlewares.UserAuth)
 
 	{
 		apiG.GET("/main", controllers.MainPage)
@@ -47,49 +51,45 @@ func main() {
 
 	//front router
 
-	fr := gin.Default()
+	fr := gin.New()
 
 	fr.Static("/", "./public")
-
-	//main router
-	r := gin.New()
-
-	r.Use(middlewares.UserAuth)
+	// fr.StaticFile("/login", "./public/loginpage.html")
 
 	r.GET("/*any", func(c *gin.Context) {
 		path := c.Param("any")
-		if strings.HasPrefix(path, "/api") {
-			apiEngine.HandleContext(c)
-		} else {
+		if !(strings.HasPrefix(path, "/api")) {
 			fr.HandleContext(c)
+			return
 		}
+		apiEngine.HandleContext(c)
 	})
 
 	r.POST("/*any", func(c *gin.Context) {
 		path := c.Param("any")
-		if strings.HasPrefix(path, "/api") {
-			apiEngine.HandleContext(c)
-		} else {
+		if !(strings.HasPrefix(path, "/api")) {
 			fr.HandleContext(c)
+			return
 		}
-	})
-
-	r.PUT("/*any", func(c *gin.Context) {
-		path := c.Param("any")
-		if strings.HasPrefix(path, "/api") {
-			apiEngine.HandleContext(c)
-		} else {
-			fr.HandleContext(c)
-		}
+		apiEngine.HandleContext(c)
 	})
 
 	r.DELETE("/*any", func(c *gin.Context) {
 		path := c.Param("any")
-		if strings.HasPrefix(path, "/api") {
-			apiEngine.HandleContext(c)
-		} else {
+		if !(strings.HasPrefix(path, "/api")) {
 			fr.HandleContext(c)
+			return
 		}
+		apiEngine.HandleContext(c)
+	})
+
+	r.PUT("/*any", func(c *gin.Context) {
+		path := c.Param("any")
+		if !(strings.HasPrefix(path, "/api")) {
+			fr.HandleContext(c)
+			return
+		}
+		apiEngine.HandleContext(c)
 	})
 
 	r.Run()
