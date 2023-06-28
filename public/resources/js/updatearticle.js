@@ -74,7 +74,7 @@ async function main() {
     if (user === "") {
         document.getElementsByClassName("update-form")[0].innerHTML =  `
         <h2>you are not logged in, click 
-        <a href="/front/loginpage.html">here</a> to login</h2>
+        <a href="/loginpage.html">here</a> to login</h2>
         `
         return
     }
@@ -91,7 +91,7 @@ async function main() {
     if (access.status === null) {
         document.getElementsByClassName("update-form")[0].innerHTML =  `
         <h2>invalid article id.
-        <a href="/front/">home</a></h2>
+        <a href="/">home</a></h2>
         `
         return
     }
@@ -99,7 +99,7 @@ async function main() {
     if (access.status === false) {
         document.getElementsByClassName("update-form")[0].innerHTML =  `
         <h2>you dont have access to this article.
-        <a href="/front/">home</a></h2>
+        <a href="/">home</a></h2>
         `
         return
     }
@@ -137,7 +137,8 @@ async function main() {
         e.preventDefault();
 
         if (e.submitter.innerText === "CANCEL") {
-            window.location.assign("/front/")
+            window.location.assign("/")
+            return
         } else if (e.submitter.innerText === "UPDATE ARTICLE") {
 
             const title = e.target.elements["title-field"].value
@@ -166,7 +167,7 @@ async function main() {
 
             setTimeout(function(){
                 console.log("after 1 second")
-                window.location.assign(`profile.html?username=${userobj.Username}`)
+                window.location.assign(`/profilepage.html?username=${userobj.Username}`)
             }, 1500);
 
         }

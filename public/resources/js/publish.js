@@ -64,7 +64,7 @@ async function main() {
     if (user === "") {
         document.getElementsByClassName("publish-form")[0].innerHTML =  `
         <h2>you are not logged in, click 
-        <a href="/front/loginpage.html">here</a> to login</h2>
+        <a href="/loginpage.html">here</a> to login</h2>
         `
         return
     }
@@ -74,7 +74,7 @@ async function main() {
     if (!checkUser(userobj)) {
         document.cookie = "user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
         user = ""
-        window.location.assign(`/front/`)
+        window.location.assign(`/`)
         return
     }
 
@@ -84,7 +84,7 @@ async function main() {
         e.preventDefault();
 
         if (e.submitter.innerText === "CANCEL") {
-            window.location.assign("/front/")
+            window.location.assign("/")
         } else if (e.submitter.innerText === "PUBLISH ARTICLE") {
 
             const title = e.target.elements["title-field"].value
@@ -116,7 +116,7 @@ async function main() {
 
             setTimeout(function(){
                 console.log("after 1 second")
-                window.location.assign(`profilepage.html?username=${result.msg.Auther}`)
+                window.location.assign(`/profilepage.html?username=${result.msg.Auther}`)
             }, 1500);
 
         }

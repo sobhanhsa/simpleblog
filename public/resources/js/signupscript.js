@@ -107,7 +107,7 @@ if (document.cookie === "") {
 
                 setTimeout(function(){
                     console.log("after 1 second")
-                    window.location.assign("/front/")
+                    window.location.assign("/")
                 }, 1500);
 
             }
@@ -116,6 +116,6 @@ if (document.cookie === "") {
 } else {
 
     document.getElementsByClassName("signup-form")[0].innerHTML = `<h2>you are already logged in;
-    <a href="/front/index.html">home</a></h2>`
+    <a href="/">home</a></h2>`
     
 }

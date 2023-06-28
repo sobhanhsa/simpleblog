@@ -19,6 +19,8 @@ async function checkUser(user) {
 
     const data = await response.json()
 
+    console.log(data)
+
     if (data.user.ID !== user.ID) {
         return false
     }
@@ -146,6 +148,7 @@ const username = searchParams.get('username');
                     </h3>
                     <p class="category">${element.Category}</p>
                     <p class="releasedate">Date of release ${element.CreatedAt}</p>
+                    <p class="desc">${element.Body.substring(0,79)}...</p>
                 </div>
             </div>`
         });

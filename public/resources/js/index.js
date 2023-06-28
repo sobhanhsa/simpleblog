@@ -22,7 +22,13 @@ async function fetchArticle(searchvalue = null) {
     } else {
         response = await fetch("/api/main",{ method :"GET"})
     }
+
+    // console.log(response)
+
     const data = await response.json()
+
+    console.log(data)
+
     return data
 }
 
@@ -43,7 +49,7 @@ async function insertArticle(articles) {
             <p class="category">${element.Category}</p>
             <p class="releasedate">Date of release ${element.CreatedAt}</p>
             <p class="auther">auther 
-            <a href="/front/profilepage.html?username=${element.Auther}">${element.Auther}</a>
+            <a href="/profilepage.html?username=${element.Auther}">${element.Auther}</a>
             </p>
             <p class="desc">${element.Body.substring(0,79)}...</p>
         </div>`
@@ -104,9 +110,9 @@ searchbox.addEventListener('submit', async(e) => {
             <p class="category">${element.Category}</p>
             <p class="releasedate">Date of release ${element.CreatedAt}</p>
             <p class="auther">auther 
-            <a href="/front/profilepage.html?username=${element.Auther}">${element.Auther}</a>
+            <a href="/profilepage.html?username=${element.Auther}">${element.Auther}</a>
             </p>
-            <p class="desc">${element.Body}</p>
+            <p class="desc">${element.Body.substring(0,79)}...</p>
         </div>`
     })
 
