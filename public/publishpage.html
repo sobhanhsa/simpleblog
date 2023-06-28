@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="./resources/css/publishstyle.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>publish article</title>
+</head>
+<body>
+    <div class="publish-form">
+        <form id="publish-form">
+            <h1>publish Article</h1>
+            <div class="content">
+                <div class="input-field">
+                    <input type="text" placeholder="Title" id="title-field">
+                    <p id="errtitle"></p>
+                </div>
+                <div class="category-field">
+                    <select name="category" id="category">
+                        <option value="sport">Sport</option>
+                        <option value="business">Business</option>
+                        <option value="science">Science</option>
+                        <option value="lifestyle" selected>LifeStyle</option>
+                    </select>
+                </div>
+                <div class="input-field">
+                    <input type="text" placeholder="Body"  id="body-field">
+                    <p id="errbody"></p>
+                </div>
+                
+                <div class="input-field">
+                    <input type="text" placeholder="Hash tag" id="hashtag-field">
+                    <p id="errhashtag"></p>
+                </div>
+            
+            </div>
+            
+            <div class="action" id="btns-container">
+                <button>Publish Article</button>
+                <button>Cancel</button>
+            </div>
+
+        </form>
+    </div>
+    <script src="./resources/js/publish.js"></script>
+</body>
+</html>

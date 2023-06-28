@@ -1,0 +1,165 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+  }
+  
+  #userprop {
+  font-size: larger;
+  margin: 0 auto 20px auto;
+  text-align: center;
+  color: brown;
+  }
+  
+  body {
+    background-color: lightcyan;
+    font-family: 'Rubik', sans-serif;
+  }
+  
+  .update-form {
+    background: #fff;
+    width: 500px;
+    margin: 100px auto;
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+            flex-direction: column;
+    border-radius: 4px;
+    box-shadow: 0 2px 25px rgba(0, 0, 0, 0.2);
+  }
+  .update-form h1 {
+    text-align: center;
+    padding: 35px 35px 0 35px;
+    font-weight: 300;
+  }
+
+  
+  .update-form .content {
+    padding: 35px;
+    text-align: center;
+  }
+
+  .update-form .content p {
+    color: red;
+  }
+
+
+  .update-form .input-field {
+    padding: 12px 5px;
+  }
+  .update-form .input-field input {
+    font-size: 16px;
+    display: block;
+    font-family: 'Rubik', sans-serif;
+    width: 100%;
+    padding: 10px 1px;
+    border: 0;
+    border-bottom: 1px solid #747474;
+    outline: none;
+    -webkit-transition: all .2s;
+    transition: all .2s;
+  }
+
+  .update-form .category-field {
+    text-align: left;
+    margin: 15px 4px;
+  }
+
+  .update-form .category-field select {
+    font-weight: 600;
+    border: solid rgb(184, 190, 197) 1px;
+    padding: 10px 15px;
+    border-radius: 10px;
+  }
+
+  .update-form .category-field option {
+    font-weight: 500;
+    border: solid rgb(114, 169, 232) 1px;
+    padding: 30px 15px;
+    border-radius: 1px;
+  }
+
+
+  .update-form .input-field input::-webkit-input-placeholder {
+    text-transform: uppercase;
+  }
+  .update-form .input-field input::-moz-placeholder {
+    text-transform: uppercase;
+  }
+  .update-form .input-field input:-ms-input-placeholder {
+    text-transform: uppercase;
+  }
+  .update-form .input-field input::-ms-input-placeholder {
+    text-transform: uppercase;
+  }
+  .update-form .input-field input::placeholder {
+    text-transform: uppercase;
+  }
+  .update-form .input-field input:focus {
+    border-color: #222;
+  }
+  .update-form a.link {
+    text-decoration: none;
+    color: #747474;
+    letter-spacing: 0.2px;
+    text-transform: uppercase;
+    display: inline-block;
+    margin-top: 20px;
+  }
+
+
+
+  .update-form .action {
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+            flex-direction: row;
+  }
+  
+  .update-form .action button {
+    width: 100%;
+    border: none;
+    padding: 18px;
+    font-family: 'Rubik', sans-serif;
+    cursor: pointer;
+    text-transform: uppercase;
+    background: #e8e9ec;
+    color: #777;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 0;
+    letter-spacing: 0.2px;
+    outline: 0;
+    -webkit-transition: all .3s;
+    transition: all .3s;
+  }
+  .update-form .action button:hover {
+    background: #d8d8d8;
+  }
+  .update-form .action p {
+    text-align: center;
+    font-family: 'Rubik', sans-serif;
+    cursor: pointer;
+    text-transform: uppercase;
+    background: #e8e9ec;
+    color: #0f4304;
+    letter-spacing: 0.2px;
+    outline: 0;
+  
+  }
+  
+  .update-form .action button:nth-child(2) {
+    background: #2d3b55;
+    color: #fff;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 4px;
+  }
+  .update-form .action button:nth-child(2):hover {
+    background: #3c4d6d;
+  }
+  
+  .redtxtcolor {
+    color: rgb(241, 3, 3);
+  }

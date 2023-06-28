@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <link rel="stylesheet" href="./resources/css/index.css">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <title>main pag</title>
+        
+    </head>
+    <body>
+        <div class="navbar" id="mainnavbar">
+            <h1 onclick="location.reload()" >Ublog</h1>
+            <!-- <div class="categories"> -->
+            <h2 onclick="window.location.href='categorypage.html?category=science';">science</h2>
+            <h2 onclick="window.location.href='categorypage.html?category=business';">business</h2>
+            <h2 onclick="window.location.href='categorypage.html?category=lifestyle';">lifestyle</h2>
+            <h2 onclick="window.location.href='categorypage.html?category=sport';">sport</h2>
+            <!-- </div> -->
+            <div id="user-info">
+                <div class="navbar-btns" id="navbar-btns">
+                    <button onclick="window.location.href='signuppage.html';">Signup</button></a>
+                    <button onclick="window.location.href='loginpage.html';">Login</button></a>
+                </div>
+            </div>
+            <form id="searchbox" class="searchform" name="searchform" >
+                <div class="input-field">
+                    <input type="text" class="search-txt-input" id="search-input">
+                </div>
+                <button class="search-button">search</button>
+                <!-- <input type="submit" value="search" class="search-button"> -->
+            </form>
+        </div>
+        <div class="articles" id="articles">
+            <h2>new artiles</h2>
+            
+        </div>
+        <div class="footer">
+
+        </div>
+        
+        <script src="./resources/js/index.js"></script>
+    </body>
+</html>

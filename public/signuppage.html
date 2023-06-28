@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Rubik:400,700'>
+    <link rel="stylesheet" href="./resources/css/signup.css">
+    <title>Signup</title>
+</head>
+<body>
+    <div class="navbar" id="navbar">
+        <h1 onclick="window.location.href='/front/';" >Ublog</h1>
+        <!-- <div class="categories"> -->
+        <h2>science</h2>
+        <h2>business</h2>
+        <h2>lifestyle</h2>
+        <h2>sport</h2>
+        <!-- </div> -->
+    </div>
+    <!-- partial:index.partial.html -->
+    <div class="signup-form">
+    <form id="signup-form">
+        <h1>Sign up</h1>
+        <div class="content">
+            <div class="input-field">
+                <div class="input-field">
+                <input type="email" id="emailfield"placeholder="Email" >
+                <p id="erremail"></p>
+                </div>
+                <div class="input-field">
+                <input type="username" id="usernamefield" placeholder="Username" >
+                <p id="errusername"></p>
+                </div>
+                <div class="input-field">
+                <input type="text" id="namefield" placeholder="Name" >
+                </div>
+                <div class="input-field">
+                    <input type="password" id="passwordfield" placeholder="Password" >
+                    <p id="errpassword"></p>
+                </div>
+            </div>
+        </div>
+        <div class="action" id="btns-container">
+            <button>Sign up</button>
+            <button>Sign in</button>
+        </div>
+    </form>
+    </div>
+    <script src="./resources/js/signupscript.js"></script>
+</body>
+</html>

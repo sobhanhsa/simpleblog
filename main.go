@@ -26,6 +26,8 @@ func main() {
 
 	r.Use(middlewares.UserAuth)
 
+	r.Use(cors.Default())
+
 	// r.Use(cors.New(cors.Config{
 	// 	AllowOrigins:     []string{"*"},
 	// 	AllowMethods:     []string{"PUT", "PATCH", "GET", "POST"},
@@ -38,7 +40,7 @@ func main() {
 	// 	MaxAge: 12 * time.Hour,
 	// }))
 
-	r.Use(cors.Default())
+	r.Static("/", "./public")
 
 	r.GET("/", controllers.MainPage)
 	r.GET("/category/:category/", controllers.ArticleCategory)
