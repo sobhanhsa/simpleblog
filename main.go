@@ -3,7 +3,8 @@ package main
 import (
 	// "fmt"
 
-	"github.com/gin-contrib/cors"
+	"strings"
+
 	"github.com/gin-gonic/gin"
 	"github.com/sobhanhsa/simpleblog/controllers"
 	"github.com/sobhanhsa/simpleblog/db"
@@ -22,38 +23,47 @@ func init() {
 }
 func main() {
 
-	r := gin.Default()
+	//backend router
+	apiEngine := gin.New()
+
+	apiG := apiEngine.Group("/api")
+
+	// apiG.Use(middlewares.UserAuth)
+
+	{
+		apiG.GET("/main", controllers.MainPage)
+		apiG.GET("/category/:category/", controllers.ArticleCategory)
+		apiG.GET("/profile/:username", controllers.ShowProfile)
+		apiG.GET("/result", controllers.SearchArticle)
+		apiG.GET("/validate", controllers.UserValidate)
+		apiG.POST("/signup", controllers.SignUpPage)
+		apiG.POST("/login", controllers.LoginPage)
+		apiG.GET("/articles", controllers.ShowArticles)
+		apiG.POST("/article", controllers.PublishArticle)
+		apiG.GET("/article/:id", controllers.ShowArticle)
+		apiG.PUT("/article/:id", controllers.UpdateArticle)
+		apiG.DELETE("/article/:id", controllers.DeleteArticle)
+	}
+
+	//front router
+
+	fr := gin.Default()
+
+	fr.Static("/", "./public")
+
+	//main router
+	r := gin.New()
 
 	r.Use(middlewares.UserAuth)
 
-	r.Use(cors.Default())
-
-	// r.Use(cors.New(cors.Config{
-	// 	AllowOrigins:     []string{"*"},
-	// 	AllowMethods:     []string{"PUT", "PATCH", "GET", "POST"},
-	// 	AllowHeaders:     []string{"Origin", "Content-Type"},
-	// 	ExposeHeaders:    []string{"Content-Length"},
-	// 	AllowCredentials: true,
-	// 	AllowOriginFunc: func(origin string) bool {
-	// 		return origin == "http://localhost:8080"
-	// 	},
-	// 	MaxAge: 12 * time.Hour,
-	// }))
-
-	r.Static("/", "./public")
-
-	r.GET("/", controllers.MainPage)
-	r.GET("/category/:category/", controllers.ArticleCategory)
-	r.GET("/profile/:username", controllers.ShowProfile)
-	r.GET("/result", controllers.SearchArticle)
-	r.GET("/validate", controllers.UserValidate)
-	r.POST("/signup", controllers.SignUpPage)
-	r.POST("/login", controllers.LoginPage)
-	r.GET("/articles", controllers.ShowArticles)
-	r.POST("/article", controllers.PublishArticle)
-	r.GET("/article/:id", controllers.ShowArticle)
-	r.PUT("/article/:id", controllers.UpdateArticle)
-	r.DELETE("/article/:id", controllers.DeleteArticle)
+	r.GET("/*any", func(c *gin.Context) {
+		path := c.Param("any")
+		if strings.HasPrefix(path, "/api") {
+			apiEngine.HandleContext(c)
+		} else {
+			fr.HandleContext(c)
+		}
+	})
 
 	r.Run()
 
