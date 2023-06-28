@@ -57,9 +57,11 @@ func UserAuth(c *gin.Context) {
 
 		//attach to request
 		c.Set("userAuthStatus", User)
+		return
 
 	} else {
 		c.Set("userAuthStatus", false)
+		return
 	}
 
 	c.Next()
