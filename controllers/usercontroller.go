@@ -30,7 +30,7 @@ func LoginPage(c *gin.Context) {
 		Password string
 	}
 
-	c.Bind(&userinfo)
+	c.ShouldBind(&userinfo)
 
 	if (userinfo.Email == "" && userinfo.Username == "") || userinfo.Password == "" {
 		c.JSON(400, gin.H{"message": "please input required fields (email or username and password)", "rescode": -1})

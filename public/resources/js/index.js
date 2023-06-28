@@ -20,7 +20,7 @@ async function fetchArticle(searchvalue = null) {
         console.log(searchvalue)
         response = await fetch(`/api/result?search_query=${searchvalue}`,{ method :"GET"}) 
     } else {
-        response = await fetch("http://localhost:8080/api/main",{ method :"GET"})
+        response = await fetch("/api/main",{ method :"GET"})
     }
     const data = await response.json()
     return data

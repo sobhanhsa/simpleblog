@@ -65,6 +65,33 @@ func main() {
 		}
 	})
 
+	r.POST("/*any", func(c *gin.Context) {
+		path := c.Param("any")
+		if strings.HasPrefix(path, "/api") {
+			apiEngine.HandleContext(c)
+		} else {
+			fr.HandleContext(c)
+		}
+	})
+
+	r.PUT("/*any", func(c *gin.Context) {
+		path := c.Param("any")
+		if strings.HasPrefix(path, "/api") {
+			apiEngine.HandleContext(c)
+		} else {
+			fr.HandleContext(c)
+		}
+	})
+
+	r.DELETE("/*any", func(c *gin.Context) {
+		path := c.Param("any")
+		if strings.HasPrefix(path, "/api") {
+			apiEngine.HandleContext(c)
+		} else {
+			fr.HandleContext(c)
+		}
+	})
+
 	r.Run()
 
 }
